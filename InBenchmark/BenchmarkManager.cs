@@ -5,6 +5,8 @@ namespace InBenchmark
     [MinColumn, MaxColumn]
     public class BenchmarkManager
     {
+        private readonly Random _random = new Random();
+
         private readonly List<Item> items = new List<Item>();
 
         private readonly List<ItemStruct> itemsStruct = new List<ItemStruct>();
@@ -19,44 +21,26 @@ namespace InBenchmark
             {
                 items.Add(new Item()
                 {
-                    ItemId = i,
-                    Price = 9.99,
-                    Author = "George Orwell",
-                    Title = "1984",
-                    Year = 1949,
-                    Stock = 20,
-                    Description = @"dystopian social science fiction novel and cautionary tale written by the English writer George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime. Thematically, it centres on the consequences of totalitarianism, mass surveillance and repressive regimentation of people and behaviours within society.",
-                    Publisher = "Secker & Warburg",
-                    Language = "en",
-                    Isin = 0
+                    ItemId = _random.NextInt64(),
+                    BookshelfId = _random.NextInt64(),
+                    ImageId = _random.NextInt64(),
+                    Isin = _random.Next(),
                 });
 
                 itemsStruct.Add(new ItemStruct()
                 {
-                    ItemId = i,
-                    Price = 9.99,
-                    Author = "George Orwell",
-                    Title = "1984",
-                    Year = 1949,
-                    Stock = 20,
-                    Description = @"dystopian social science fiction novel and cautionary tale written by the English writer George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime. Thematically, it centres on the consequences of totalitarianism, mass surveillance and repressive regimentation of people and behaviours within society.",
-                    Publisher = "Secker & Warburg",
-                    Language = "en",
-                    Isin = 0
+                    ItemId = _random.NextInt64(),
+                    BookshelfId = _random.NextInt64(),
+                    ImageId = _random.NextInt64(),
+                    Isin = _random.Next(),
                 });
 
                 itemsRecord.Add(new ItemRecord()
                 {
-                    ItemId = i,
-                    Price = 9.99,
-                    Author = "George Orwell",
-                    Title = "1984",
-                    Year = 1949,
-                    Stock = 20,
-                    Description = @"dystopian social science fiction novel and cautionary tale written by the English writer George Orwell. It was published on 8 June 1949 by Secker & Warburg as Orwell's ninth and final book completed in his lifetime. Thematically, it centres on the consequences of totalitarianism, mass surveillance and repressive regimentation of people and behaviours within society.",
-                    Publisher = "Secker & Warburg",
-                    Language = "en",
-                    Isin = 0
+                    ItemId = _random.NextInt64(),
+                    BookshelfId = _random.NextInt64(),
+                    ImageId = _random.NextInt64(),
+                    Isin = _random.Next(),
                 });
             }
         }
@@ -64,54 +48,60 @@ namespace InBenchmark
         [Benchmark]
         public void ChangeWithoutInClass()
         {
+            int sum = 0;
             foreach (Item item in items)
             {
-                ItemChanger.ReturnIsinWithOutIn(item);
+                sum += ItemChanger.ReturnIsinWithOutIn(item);
             }
         } 
 
         [Benchmark]
         public void ChangeWithInClass()
         {
-            foreach(Item item in items)
+            int sum = 0;
+            foreach (Item item in items)
             {
-                ItemChanger.ReturnIsinWithIn(item);
+                sum += ItemChanger.ReturnIsinWithIn(item);
             }
         }
 
         [Benchmark]
         public void ChangeWithoutInStruct()
         {
+            int sum = 0;
             foreach (ItemStruct item in itemsStruct)
             {
-                ItemChanger.ReturnIsinWithoutInStruct(item);
+                sum += ItemChanger.ReturnIsinWithoutInStruct(item);
             }
         }
 
         [Benchmark]
         public void ChangeWithInStruct()
         {
+            int sum = 0;
             foreach (ItemStruct item in itemsStruct)
             {
-                ItemChanger.ReturnIsinWithInStruct(item);
+                sum += ItemChanger.ReturnIsinWithInStruct(item);
             }
         }
 
         [Benchmark]
         public void ChangeWithoutInRecord()
         {
+            int sum = 0;
             foreach (ItemRecord item in itemsRecord)
             {
-                ItemChanger.ReturnIsinWithoutInRecord(item);
+                sum += ItemChanger.ReturnIsinWithoutInRecord(item);
             }
         }
 
         [Benchmark]
         public void ChangeWithInRecord()
         {
+            int sum = 0;
             foreach (ItemRecord item in itemsRecord)
             {
-                ItemChanger.ReturnIsinWithInRecord(item);
+                sum += ItemChanger.ReturnIsinWithInRecord(item);
             }
         }
     }
